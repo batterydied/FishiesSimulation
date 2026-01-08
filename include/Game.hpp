@@ -11,6 +11,7 @@ private:
     void processEvents();
     void update(float dt);
     void render();
+    void handleResize(sf::RenderWindow& window, const sf::Event::Resized& resized, float targetRatio, const sf::Vector2f& baseSize);
     
     sf::RenderWindow window;
     sf::Clock clock;

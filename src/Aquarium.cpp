@@ -6,15 +6,12 @@
 #include <string>
 
 Aquarium::Aquarium(unsigned int width, unsigned int height): WIDTH(width), HEIGHT(height), DEFAULT_SPEED(100), DEFAULT_SIZE(100){
-    setBackground(Background::B1);
+    setBackground(Background::B2);
 };
 
 void Aquarium::draw(sf::RenderWindow& window) {
     if(backgroundSprite){
-        sf::Vector2u textureSize = backgroundTexture.getSize();
-        float scaleX = static_cast<float>(WIDTH) / textureSize.x;
-        float scaleY = static_cast<float>(HEIGHT) / textureSize.y;
-        backgroundSprite->setScale({scaleX, scaleY});
+        scaleBackground();
         window.draw(*backgroundSprite);
     }else{ //Draw a black rectangle as fallback
         sf::RectangleShape blackBackground(sf::Vector2f(static_cast<float>(WIDTH), static_cast<float>(HEIGHT)));
@@ -38,11 +35,17 @@ std::string Aquarium::getBackgroundName(Background bg){
         case Background::B0: return "b0";
         case Background::B1: return "b1";
         case Background::B2: return "b2";
-        case Background::B3: return "b3";
-        case Background::B4: return "b4";
     }
     return "b0";
 };
 
 void Aquarium::update(float dt) {
 };
+
+void Aquarium::scaleBackground(){
+    sf::Vector2u textureSize = backgroundTexture.getSize();
+    float scaleX = static_cast<float>(WIDTH) / textureSize.x;
+    float scaleY = static_cast<float>(HEIGHT) / textureSize.y;
+    backgroundSprite->setScale({scaleX, scaleY});
+};
+

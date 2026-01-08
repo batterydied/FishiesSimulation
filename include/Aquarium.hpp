@@ -2,7 +2,7 @@
 #include <memory>
 #include <string>
 
-enum class Background {B0, B1, B2, B3, B4};
+enum class Background {B0, B1, B2};
 
 class Aquarium {
     public:
@@ -23,6 +23,8 @@ class Aquarium {
         unsigned int DEFAULT_SIZE;
 
         std::string getBackgroundName(Background bg);
+        void scaleBackground();
+
         sf::Texture backgroundTexture;
         std::optional<sf::Sprite> backgroundSprite;
 };
