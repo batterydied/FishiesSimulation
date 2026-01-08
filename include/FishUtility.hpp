@@ -30,7 +30,6 @@ struct FishSpeciesData {
 class FishUtility{
 public:
     FishUtility();
-
     void printAllSpecies();
     void printRandomScore();
 

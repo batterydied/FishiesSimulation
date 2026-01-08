@@ -94,3 +94,4 @@ void FishUtility::printRandomScore(){
     range r = getSizeRange(FishSizeCategory::LG);
     std::cout << getRandomScore(r) << "\n";
 }
+

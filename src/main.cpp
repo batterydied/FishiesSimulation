@@ -1,10 +1,10 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
 #include "FishUtility.hpp"
+#include "Game.hpp"
 
 int main() {
-    //FishUtility utils;
-    //utils.printAllSpecies();
-    //utils.printRandomScore();
+    Game game;
+    game.run();
     return 0;
 }
