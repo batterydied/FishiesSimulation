@@ -1,6 +1,8 @@
 #pragma once
 #include <memory>
 #include <string>
+#include "Fish.hpp"
+#include <vector>
 
 enum class Background {B0, B1, B2};
 
@@ -27,4 +29,5 @@ class Aquarium {
 
         sf::Texture backgroundTexture;
         std::optional<sf::Sprite> backgroundSprite;
+        std::vector<Fish> fishes;
 };

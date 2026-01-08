@@ -57,7 +57,7 @@ void Game::handleResize(sf::RenderWindow& window, const sf::Event::Resized& resi
 }
 
 void Game::update(float dt) {
-    //aquarium.update(dt);
+    aquarium.update(dt);
 }
 
 void Game::render() {

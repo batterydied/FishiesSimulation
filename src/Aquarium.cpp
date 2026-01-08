@@ -4,9 +4,11 @@
 #include "Aquarium.hpp"
 #include <memory>
 #include <string>
+#include "Fish.hpp"
 
 Aquarium::Aquarium(unsigned int width, unsigned int height): WIDTH(width), HEIGHT(height), DEFAULT_SPEED(100), DEFAULT_SIZE(100){
     setBackground(Background::B2);
+    fishes.push_back(Fish({300,300}));
 };
 
 void Aquarium::draw(sf::RenderWindow& window) {
@@ -17,6 +19,10 @@ void Aquarium::draw(sf::RenderWindow& window) {
         sf::RectangleShape blackBackground(sf::Vector2f(static_cast<float>(WIDTH), static_cast<float>(HEIGHT)));
         blackBackground.setFillColor(sf::Color::Black);
         window.draw(blackBackground);
+    }
+
+    for(auto fish : fishes){
+        fish.draw(window);
     }
 };
 
@@ -40,6 +46,9 @@ std::string Aquarium::getBackgroundName(Background bg){
 };
 
 void Aquarium::update(float dt) {
+    for(auto& fish : fishes){
+        fish.update(dt);
+    }
 };
 
 void Aquarium::scaleBackground(){
