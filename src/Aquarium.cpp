@@ -4,11 +4,21 @@
 #include "Aquarium.hpp"
 #include <memory>
 #include <string>
-#include "Fish.hpp"
 
 Aquarium::Aquarium(unsigned int width, unsigned int height): WIDTH(width), HEIGHT(height), DEFAULT_SPEED(100), DEFAULT_SIZE(100){
-    setBackground(Background::B2);
-    fishes.push_back(Fish({300,300}));
+    xBounds = {xPadding, width - xPadding};
+    yBounds = {yPadding, height - yPadding}; 
+    setBackground(Background::B0);
+    addFish(FishSpecies::BLUE_TANG);
+    addFish(FishSpecies::CLOWNFISH);
+    addFish(FishSpecies::PURPLE_TANG);
+    addFish(FishSpecies::VANDERBILT_CHROMIS);
+    addFish(FishSpecies::ROYAL_GRAMMA);
+    addFish(FishSpecies::CLOWNFISH);
+};
+
+void Aquarium::addFish(FishSpecies species){
+    fishes.push_back(Fish(species, xBounds, yBounds));
 };
 
 void Aquarium::draw(sf::RenderWindow& window) {

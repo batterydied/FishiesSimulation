@@ -1,6 +1,7 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include "Aquarium.hpp"
+#include "FishUtility.hpp"
 
 class Game {
 public:
@@ -17,4 +18,5 @@ private:
     sf::Clock clock;
 
     Aquarium aquarium;
+    FishUtility utility;
 };

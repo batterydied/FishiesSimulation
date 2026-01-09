@@ -1,47 +1,43 @@
-#pragma once 
+#pragma once
 
-#include <vector>
+#include <unordered_map>
 #include "FishUtility.hpp"
+#include <array>
 
-std::vector<FishSpeciesData> FishDatabase = {
-    {
-        "BlueTang",
-        {},                         
+inline std::unordered_map<std::string, FishSpeciesData> FishDatabase = {
+    { "BlueTang", {
+        "Blue Tang",
         FishSizeCategory::LG,
         FishSpeedCategory::FAST,
         FishActivityCategory::VERY_ACTIVE,
-        FishDwellingCategory::MID_TOP
-    },
-    {
+        FishDwellingCategory::TOP
+    }},
+    { "Clownfish", {
         "Clownfish",
-        {},
         FishSizeCategory::SM,
         FishSpeedCategory::MEDIUM,
         FishActivityCategory::PASSIVE,
-        FishDwellingCategory::MID_BOTTOM
-    },
-    {
-        "PurpleTang",
-        {},
+        FishDwellingCategory::BOTTOM
+    }},
+    { "PurpleTang", {
+        "Purple Tang",
         FishSizeCategory::LG,
         FishSpeedCategory::FAST,
         FishActivityCategory::VERY_ACTIVE,
-        FishDwellingCategory::MID_TOP
-    },
-    {
-        "VanderbiltChromis",
-        {},
+        FishDwellingCategory::TOP
+    }},
+    { "VanderbiltChromis", {
+        "Vanderbilt Chromis",
         FishSizeCategory::XS,
         FishSpeedCategory::MEDIUM,
         FishActivityCategory::ACTIVE,
-        FishDwellingCategory::MID_TOP
-    },
-    {
-        "RoyalGramma",
-        {},
+        FishDwellingCategory::TOP
+    }},
+    { "RoyalGramma", {
+        "Royal Gramma",
         FishSizeCategory::SM,
         FishSpeedCategory::SLOW,
         FishActivityCategory::PASSIVE,
-        FishDwellingCategory::MID_BOTTOM
-    }
+        FishDwellingCategory::BOTTOM
+    }}
 };

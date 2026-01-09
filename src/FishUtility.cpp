@@ -1,15 +1,13 @@
-#include <iostream>
-#include <vector>
-#include <string>
-#include <SFML/Graphics.hpp>
-#include <random>
 #include "FishDatabase.hpp"
+#include <iostream>
+#include <random>
+#include <cmath>
 
 FishUtility::FishUtility() {
-    initializeFishDatabase();
 }
 
-range FishUtility::getSizeRange(FishSizeCategory category) {
+// --- Range helpers ---
+Range FishUtility::getSizeRange(FishSizeCategory category){
     switch(category){
         case FishSizeCategory::XXS: return {1, 1.15};
         case FishSizeCategory::XS: return {1.25, 1.5};
@@ -20,10 +18,9 @@ range FishUtility::getSizeRange(FishSizeCategory category) {
         case FishSizeCategory::XXL: return {6, 8};
     }
     return {1, 1};
-};
+}
 
-range FishUtility::getActivityRange(FishActivityCategory category) {
-    //chances of moving
+Range FishUtility::getActivityRange(FishActivityCategory category){
     switch(category){
         case FishActivityCategory::VERY_PASSIVE: return {.15, .20};
         case FishActivityCategory::PASSIVE: return {.2, .3};
@@ -32,9 +29,9 @@ range FishUtility::getActivityRange(FishActivityCategory category) {
         case FishActivityCategory::VERY_ACTIVE: return {.8, .99};
     }
     return {.5, .6};
-};
+}
 
-range FishUtility::getSpeedRange(FishSpeedCategory category) {
+Range FishUtility::getSpeedRange(FishSpeedCategory category){
     switch(category){
         case FishSpeedCategory::VERY_SLOW: return {1, 1.05};
         case FishSpeedCategory::SLOW: return {1.2, 1.3};
@@ -43,55 +40,59 @@ range FishUtility::getSpeedRange(FishSpeedCategory category) {
         case FishSpeedCategory::VERY_FAST: return {3, 3.5};
     }
     return {1.5, 1.65};
-};
+}
 
-range FishUtility::getDwellingRange(FishDwellingCategory category) {
-    //where the fish will stay with respect to height of the tank
+Range FishUtility::getDwellingRange(FishDwellingCategory category){
     switch(category){
-        case FishDwellingCategory::TOP: return {.7, .9};
-        case FishDwellingCategory::MID_TOP: return {.5, .9};
-        case FishDwellingCategory::MID: return {.4, .6};
-        case FishDwellingCategory::MID_BOTTOM: return {.1, .55};
-        case FishDwellingCategory::BOTTOM: return {.1, .2};
-        case FishDwellingCategory::ALL: return {.1, .9};
+        case FishDwellingCategory::TOP: return {.5, .1};
+        case FishDwellingCategory::MID: return {.65, .25};
+        case FishDwellingCategory::BOTTOM: return {.9, .5};
+        case FishDwellingCategory::GROUNDED: return {.9, .9};
+        case FishDwellingCategory::ALL: return {.9, .1};
     }
-    return {.4, .6};
-};
+    return {1, .1};
+}
 
-float FishUtility::getRandomScore(range& r) {
+float FishUtility::getRandomScore(Range r){
     static std::mt19937 rng{ std::random_device{}() };
     std::uniform_real_distribution<float> dist(r.minVal, r.maxVal);
     float value = dist(rng);
-    float roundedTo4 = std::round(value * 10000.f) / 10000.f;
-    return roundedTo4;
-};
+    return std::round(value * 10000.f) / 10000.f; // round to 4 decimals
+}
 
-void FishUtility::loadFishTextures(FishSpeciesData& species) {
-    for (size_t i = 0; i < NUM_SPRITES; i++) {
-        std::string path = "resources/fishes/" + species.name + "/f" + std::to_string(i) + ".png";
-        if (!species.textures[i].loadFromFile(path)) {
-            std::cerr << "Failed to load texture: " << path << "\n";
-        }
-    }
-};
+RangeY FishUtility::getDwellingPositions(RangeY& defaultRange, FishDwellingCategory category){
+    unsigned int top = defaultRange.top;
+    unsigned int bottom = defaultRange.bottom;
+    unsigned int diff = bottom - top;
 
-void FishUtility::initializeFishDatabase(){
-    size_t numSpecies = std::size(FishDatabase);
-    for(size_t i = 0; i < numSpecies; i++){
-        FishSpeciesData& species = FishDatabase[i];
-        loadFishTextures(species);
-    }
-};
+    Range scale = getDwellingRange(category);
 
+    unsigned int newTop = static_cast<unsigned int>(diff * scale.maxVal) + top;
+    unsigned int newBottom = static_cast<unsigned int>(diff * scale.minVal) + top;
+
+    return {newTop, newBottom};
+}
+
+// --- Print functions ---
 void FishUtility::printAllSpecies(){
-    size_t numSpecies = std::size(FishDatabase);
-    for(size_t i = 0; i < numSpecies; i++){
-        std::cout << FishDatabase[i].name << "\n";
+    for (const auto& [name, species] : FishDatabase) {
+        std::cout << species.name << "\n";
     }
 }
 
 void FishUtility::printRandomScore(){
-    range r = getSizeRange(FishSizeCategory::LG);
+    Range r = getSizeRange(FishSizeCategory::LG);
     std::cout << getRandomScore(r) << "\n";
 }
 
+// --- Species name getter ---
+std::string FishUtility::getSpeciesName(FishSpecies species){
+    switch(species){
+        case FishSpecies::CLOWNFISH: return "Clownfish";
+        case FishSpecies::BLUE_TANG: return "BlueTang";
+        case FishSpecies::PURPLE_TANG: return "PurpleTang";
+        case FishSpecies::ROYAL_GRAMMA: return "RoyalGramma";
+        case FishSpecies::VANDERBILT_CHROMIS: return "VanderbiltChromis";
+    }
+    return "Clownfish";
+}
