@@ -32,6 +32,7 @@ private:
 
     RangeX xBounds;
     RangeY yBounds;
+    unsigned int size;
 
     std::string getFishSpeciesName(FishSpecies species);
     void setTextures(std::string speciesName);

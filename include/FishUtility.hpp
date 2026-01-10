@@ -13,7 +13,7 @@ enum class FishSpeedCategory { VERY_SLOW, SLOW, MEDIUM, FAST, VERY_FAST };
 enum class FishActivityCategory { VERY_PASSIVE, PASSIVE, MODERATE, ACTIVE, VERY_ACTIVE };
 enum class FishDwellingCategory { TOP, MID, BOTTOM, GROUNDED, ALL };
 enum class FishSpecies {
-    CLOWNFISH, BLUE_TANG, PURPLE_TANG, ROYAL_GRAMMA, VANDERBILT_CHROMIS
+    CLOWNFISH, BLUE_TANG, PURPLE_TANG, ROYAL_GRAMMA, VANDERBILT_CHROMIS, TEST
 };
 
 struct Range {

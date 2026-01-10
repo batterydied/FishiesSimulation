@@ -154,6 +154,7 @@ std::string Fish::getFishSpeciesName(FishSpecies species){
         case FishSpecies::PURPLE_TANG: return "PurpleTang";
         case FishSpecies::ROYAL_GRAMMA: return "RoyalGramma";
         case FishSpecies::VANDERBILT_CHROMIS: return "VanderbiltChromis";
+        case FishSpecies::TEST: return "Test";
     }
     return "Clownfish";
 }

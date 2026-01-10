@@ -14,7 +14,6 @@ Aquarium::Aquarium(unsigned int width, unsigned int height): WIDTH(width), HEIGH
     addFish(FishSpecies::PURPLE_TANG);
     addFish(FishSpecies::VANDERBILT_CHROMIS);
     addFish(FishSpecies::ROYAL_GRAMMA);
-    addFish(FishSpecies::CLOWNFISH);
 };
 
 void Aquarium::addFish(FishSpecies species){
