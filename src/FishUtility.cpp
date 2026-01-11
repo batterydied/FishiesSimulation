@@ -30,13 +30,13 @@ Range FishUtility::getActivityRange(FishActivityCategory category){
 
 Range FishUtility::getSpeedRange(FishSpeedCategory category){
     switch(category){
-        case FishSpeedCategory::VERY_SLOW: return {1, 1.05};
-        case FishSpeedCategory::SLOW: return {1.2, 1.3};
-        case FishSpeedCategory::MEDIUM: return {1.5, 1.65};
-        case FishSpeedCategory::FAST: return {2, 2.25};
-        case FishSpeedCategory::VERY_FAST: return {3, 3.5};
+        case FishSpeedCategory::VERY_SLOW: return {0.8f, 1.0f};      // barely moving, relaxed fish
+        case FishSpeedCategory::SLOW:      return {1.1f, 1.25f};     // casual swimming
+        case FishSpeedCategory::MEDIUM:    return {1.4f, 1.6f};      // average movement
+        case FishSpeedCategory::FAST:      return {2.0f, 2.4f};      // noticeably faster
+        case FishSpeedCategory::VERY_FAST: return {3.0f, 3.8f};      // hyperactive, darting fish
     }
-    return {1.5, 1.65};
+    return {1.4f, 1.6f};
 }
 
 Range FishUtility::getDwellingRange(FishDwellingCategory category){
@@ -101,4 +101,13 @@ unsigned int FishUtility::getRandomSize(FishSpecies species){
 FishDwellingCategory FishUtility::getDwellingCategory(FishSpecies species){
     FishSpeciesData speciesData = FishDatabase[species];
     return speciesData.dwelling;
+}
+
+FishSpeedCategory FishUtility::getSpeedCategory(FishSpecies species){
+    FishSpeciesData speciesData = FishDatabase[species];
+    return speciesData.speed;
+}
+
+float FishUtility::getRandomSpeed(FishSpecies species){
+    return (FishUtility::getRandomScore(FishUtility::getSpeedRange(FishUtility::getSpeedCategory(species)))) * 1.0f;
 }

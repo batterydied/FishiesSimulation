@@ -34,6 +34,7 @@ public:
     static std::string getSpeciesName(FishSpecies species);
     static unsigned int getRandomSize(FishSpecies species);
     static FishDwellingCategory getDwellingCategory(FishSpecies species);
+    static float getRandomSpeed(FishSpecies species);
 
 private:
     static Range getSizeRange(FishSizeCategory category);
@@ -41,5 +42,6 @@ private:
     static Range getDwellingRange(FishDwellingCategory category);
     static Range getActivityRange(FishActivityCategory category);
     static FishSizeCategory getSizeCategory(FishSpecies species);
+    static FishSpeedCategory getSpeedCategory(FishSpecies species);
 };
 

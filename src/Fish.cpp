@@ -26,9 +26,10 @@ Fish::Fish(FishSpecies species, RangeX& initXBounds, RangeY& initYBounds): veloc
     sprite->setScale({scale, scale});
 
     // randomize initial direction a bit
-    velocity.x *= (static_cast<unsigned int>(FishUtility::getRandomScore({1, 10})) % 2 == 0) ? 1.f : -1.f;
+    float speed = FishUtility::getRandomSpeed(species);
+    velocity.x *= (static_cast<unsigned int>(FishUtility::getRandomScore({1, 10})) % 2 == 0) ? speed : -speed;
     //velocity.y = 0;
-    velocity.y *= (rand() % 2 == 0) ? 1.f : -1.f;
+    velocity.y *= (static_cast<unsigned int>(FishUtility::getRandomScore({1, 10})) % 2 == 0) ? speed : -speed;
 
     yBounds = FishUtility::getDwellingPositions(initYBounds, FishUtility::getDwellingCategory(species));
     startPosition.y = yBounds.top + 
