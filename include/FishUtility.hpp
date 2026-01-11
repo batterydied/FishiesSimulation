@@ -33,12 +33,13 @@ public:
     static float getRandomScore(Range r);
     static std::string getSpeciesName(FishSpecies species);
     static unsigned int getRandomSize(FishSpecies species);
+    static FishDwellingCategory getDwellingCategory(FishSpecies species);
 
 private:
     static Range getSizeRange(FishSizeCategory category);
     static Range getSpeedRange(FishSpeedCategory category);
     static Range getDwellingRange(FishDwellingCategory category);
     static Range getActivityRange(FishActivityCategory category);
-     static FishSizeCategory getSizeCategory(FishSpecies species);
+    static FishSizeCategory getSizeCategory(FishSpecies species);
 };
 

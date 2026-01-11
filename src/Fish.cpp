@@ -30,7 +30,7 @@ Fish::Fish(FishSpecies species, RangeX& initXBounds, RangeY& initYBounds): veloc
     //velocity.y = 0;
     velocity.y *= (rand() % 2 == 0) ? 1.f : -1.f;
 
-    yBounds = FishUtility::getDwellingPositions(initYBounds, FishDwellingCategory::ALL);
+    yBounds = FishUtility::getDwellingPositions(initYBounds, FishUtility::getDwellingCategory(species));
     startPosition.y = yBounds.top + 
                   static_cast<float>(rand() % (yBounds.bottom - yBounds.top + 1));
     startPosition.x = xBounds.left + static_cast<float>(rand() % (xBounds.right - xBounds.left + 1));

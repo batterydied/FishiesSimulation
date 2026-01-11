@@ -97,3 +97,8 @@ unsigned int FishUtility::getRandomSize(FishSpecies species){
         std::round(FishUtility::getRandomScore(FishUtility::getSizeRange(FishUtility::getSizeCategory(species)))) * 50
     );
 }
+
+FishDwellingCategory FishUtility::getDwellingCategory(FishSpecies species){
+    FishSpeciesData speciesData = FishDatabase[species];
+    return speciesData.dwelling;
+}
