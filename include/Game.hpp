@@ -18,5 +18,4 @@ private:
     sf::Clock clock;
 
     Aquarium aquarium;
-    FishUtility utility;
 };

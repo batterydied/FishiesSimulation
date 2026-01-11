@@ -34,7 +34,6 @@ private:
     RangeY yBounds;
     unsigned int size;
 
-    std::string getFishSpeciesName(FishSpecies species);
     void setTextures(std::string speciesName);
     void handleBounds();
     void maybeChangeDirection(float deltaTime);

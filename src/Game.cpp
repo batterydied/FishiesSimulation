@@ -4,7 +4,7 @@
 
 Game::Game()
     : window(sf::VideoMode({1400, 800}), "Fishies Simulation"),
-      aquarium(1400, 800), utility()
+      aquarium(1400, 800)
 {
 }
 

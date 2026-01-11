@@ -2,20 +2,17 @@
 #include <iostream>
 #include <random>
 #include <cmath>
+#include "FishUtility.hpp"
 
-FishUtility::FishUtility() {
-}
-
-// --- Range helpers ---
 Range FishUtility::getSizeRange(FishSizeCategory category){
     switch(category){
-        case FishSizeCategory::XXS: return {1, 1.15};
-        case FishSizeCategory::XS: return {1.25, 1.5};
-        case FishSizeCategory::SM: return {1.5, 2};
-        case FishSizeCategory::MD: return {2, 2.5};
-        case FishSizeCategory::LG: return {3, 4};
-        case FishSizeCategory::XL: return {5, 6};
-        case FishSizeCategory::XXL: return {6, 8};
+        case FishSizeCategory::XXS: return {0.4f, 0.5f};    // 20–25
+        case FishSizeCategory::XS:  return {0.5f, 0.6f};    // 25–30
+        case FishSizeCategory::SM:  return {0.6f, 0.7f};    // 30–35
+        case FishSizeCategory::MD:  return {1.1f, 1.25f};   // 55–63
+        case FishSizeCategory::LG:  return {1.6f, 1.9f};    // 80–95
+        case FishSizeCategory::XL:  return {2.6f, 3.1f};    // 130–155
+        case FishSizeCategory::XXL: return {3.8f, 4.5f};    // 190–225
     }
     return {1, 1};
 }
@@ -85,14 +82,18 @@ void FishUtility::printRandomScore(){
     std::cout << getRandomScore(r) << "\n";
 }
 
-// --- Species name getter ---
 std::string FishUtility::getSpeciesName(FishSpecies species){
-    switch(species){
-        case FishSpecies::CLOWNFISH: return "Clownfish";
-        case FishSpecies::BLUE_TANG: return "BlueTang";
-        case FishSpecies::PURPLE_TANG: return "PurpleTang";
-        case FishSpecies::ROYAL_GRAMMA: return "RoyalGramma";
-        case FishSpecies::VANDERBILT_CHROMIS: return "VanderbiltChromis";
-    }
-    return "Clownfish";
+    FishSpeciesData speciesData = FishDatabase[species];
+    return speciesData.name;
+}
+
+FishSizeCategory FishUtility::getSizeCategory(FishSpecies species){
+    FishSpeciesData speciesData = FishDatabase[species];
+    return speciesData.size;
+}
+
+unsigned int FishUtility::getRandomSize(FishSpecies species){
+    return static_cast<int>(
+        std::round(FishUtility::getRandomScore(FishUtility::getSizeRange(FishUtility::getSizeCategory(species)))) * 50
+    );
 }

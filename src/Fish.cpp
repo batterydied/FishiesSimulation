@@ -5,22 +5,24 @@
 #include <array>
 #include <iostream>
 #include "Aquarium.hpp"
-#include "FishUtility.hpp"
 #include "FishDatabase.hpp"
+#include "FishUtility.hpp"
 
 static float degToRad(float degrees) {
     return degrees * 3.14159265f / 180.f;
 }
 
 Fish::Fish(FishSpecies species, RangeX& initXBounds, RangeY& initYBounds): velocity(50.f, 50.f), directionCooldown(3.f), textures{}, xBounds(initXBounds){
-    std::string speciesName = getFishSpeciesName(species);
+    std::string speciesName = FishUtility::getSpeciesName(species);
     setTextures(speciesName);
     sf::Vector2f startPosition;
 
     sf::FloatRect bounds = sprite->getGlobalBounds();
     sprite->setOrigin(sf::Vector2f(bounds.size.x / 2.f, bounds.size.y / 2.f));
 
-    float scale = 100 / bounds.size.x;
+    size = FishUtility::getRandomSize(species);
+
+    float scale = size / bounds.size.x;
     sprite->setScale({scale, scale});
 
     // randomize initial direction a bit
@@ -145,18 +147,6 @@ void Fish::changeDirection() {
     // Update velocity
     velocity.x = std::cos(angle) * speed;
     velocity.y = std::sin(angle) * speed;
-}
-
-std::string Fish::getFishSpeciesName(FishSpecies species){
-    switch(species){
-        case FishSpecies::CLOWNFISH: return "Clownfish";
-        case FishSpecies::BLUE_TANG: return "BlueTang";
-        case FishSpecies::PURPLE_TANG: return "PurpleTang";
-        case FishSpecies::ROYAL_GRAMMA: return "RoyalGramma";
-        case FishSpecies::VANDERBILT_CHROMIS: return "VanderbiltChromis";
-        case FishSpecies::TEST: return "Test";
-    }
-    return "Clownfish";
 }
 
 void Fish::setTextures(std::string speciesName){
