@@ -17,7 +17,7 @@ Fish::Fish(FishSpecies species, RangeX& initXBounds, RangeY& initYBounds): veloc
     setTextures(speciesName);
     sf::Vector2f startPosition;
 
-    sf::FloatRect bounds = sprite->getGlobalBounds();
+    sf::FloatRect bounds = sprite->getLocalBounds();
     sprite->setOrigin(sf::Vector2f(bounds.size.x / 2.f, bounds.size.y / 2.f));
 
     size = FishUtility::getRandomSize(species);
@@ -41,10 +41,19 @@ Fish::Fish(FishSpecies species, RangeX& initXBounds, RangeY& initYBounds): veloc
 
 // Update fish state (movement)
 void Fish::update(float deltaTime){
+    updateSpriteByTime(deltaTime);
+    if (isStopped) {
+        stopTimer -= deltaTime;
+        if (stopTimer <= 0.f) {
+            isStopped = false;
+            velocity = savedVelocity;
+        }else{
+            return;
+        }
+    }
     // Move the fish
     sprite->move(velocity * deltaTime);
     maybeChangeDirection(deltaTime);
-    updateSpriteByTime(deltaTime);
 
     // Determine tilt angle based on y-velocity
     float tiltAngle = std::atan2(velocity.y, velocity.x); // radians
@@ -150,6 +159,15 @@ void Fish::changeDirection() {
     velocity.y = std::sin(angle) * speed;
 }
 
+void Fish::stop(){
+    if(!isStopped){
+        savedVelocity = velocity;
+        velocity = {0.f, 0.f};
+        stopTimer = 2.f;
+        isStopped = true;
+    }
+}
+
 void Fish::setTextures(std::string speciesName){
     for(size_t i = 0; i < NUM_TEXTURES; i++){
         if(!textures[i].loadFromFile("resources/fishes/" + speciesName + "/f" + std::to_string(i) + ".png")){
@@ -158,4 +176,14 @@ void Fish::setTextures(std::string speciesName){
         }
     }
     sprite = sf::Sprite(textures[0]);
+}
+
+bool Fish::contains(sf::Vector2f point) const {
+    return sprite->getGlobalBounds().contains(point);
+}
+
+void Fish::handleClick(sf::Vector2f point){
+    if(Fish::contains(point)){
+        Fish::stop();
+    }
 }

@@ -19,6 +19,8 @@ class Aquarium {
         unsigned int getWidth();
         unsigned int getHeight();
 
+        void click(sf::Vector2f point);
+
     private: 
         unsigned int WIDTH;
         unsigned int HEIGHT;

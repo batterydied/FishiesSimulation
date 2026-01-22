@@ -67,3 +67,8 @@ void Aquarium::scaleBackground(){
     backgroundSprite->setScale({scaleX, scaleY});
 };
 
+void Aquarium::click(sf::Vector2f point){
+    for(auto& fish: fishes){
+        fish.handleClick(point);
+    }
+};

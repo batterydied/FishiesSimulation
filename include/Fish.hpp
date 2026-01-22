@@ -20,6 +20,10 @@ public:
 
     void setTextures(FishSpecies species);
 
+    bool contains(sf::Vector2f point) const;
+
+    void handleClick(sf::Vector2f point);
+
 private:
     int currentTextureIndex = 0;    // which texture is showing now
     float animationTimer = 0.f;     // counts time
@@ -29,6 +33,9 @@ private:
     sf::Vector2f velocity;
     std::optional<sf::Sprite> sprite;
     float directionCooldown;
+    sf::Vector2f savedVelocity;
+    bool isStopped = false;
+    float stopTimer = 0.f;  
 
     RangeX xBounds;
     RangeY yBounds;
@@ -38,4 +45,5 @@ private:
     void handleBounds();
     void maybeChangeDirection(float deltaTime);
     void changeDirection();
+    void stop();
 };

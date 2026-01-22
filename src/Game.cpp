@@ -29,6 +29,15 @@ void Game::processEvents() {
         if (const auto* resized = event->getIf<sf::Event::Resized>()) {
             handleResize(window, *resized, targetRatio, baseSize);
         }
+
+        if (const auto* mousePressed = event->getIf<sf::Event::MouseButtonPressed>()) {
+            if (mousePressed->button == sf::Mouse::Button::Left) {
+
+                sf::Vector2f mousePos = window.mapPixelToCoords(mousePressed->position);
+
+                aquarium.click(mousePos);
+            }
+        }
     }
 }
 
